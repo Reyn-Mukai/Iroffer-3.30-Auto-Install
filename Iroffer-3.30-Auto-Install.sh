@@ -28,6 +28,9 @@ then
   apt-get -y install ruby1.8-dev
   apt-get -y install ruby1.8
   apt-get -y install libruby1.8
+  RUBY=TRUE
+else
+  RUBY=FALSE
 fi
 if grep -q "8." /etc/debian_version
 then
@@ -37,7 +40,12 @@ fi
 
 echo "Configuring sources..."
 cd iroffer-dinoex-3.30
-./Configure -curl -geoip -ruby
+if RUBY==TRUE
+then
+  ./Configure -curl -geoip -ruby
+else
+  ./Configure -curl -geoip
+fi
 
 echo "Executing make..."
 cd ${USER_HOME}/iroffer-dinoex-3.30
